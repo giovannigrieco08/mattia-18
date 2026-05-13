@@ -96,18 +96,28 @@ export function UploadSheet() {
     if (files.length === 0) return;
     setStep("uploading");
     startTransition(async () => {
-      const fd = new FormData();
-      for (const f of files) fd.append("photos", f);
-      if (name.trim()) fd.append("guest_name", name.trim());
-      if (caption.trim()) fd.append("caption", caption.trim());
-      const result = await uploadPhotos(fd);
-      if (result.ok && result.uploaded > 0) {
-        setStep("success");
-      } else {
-        const first = result.errors[0];
+      try {
+        const fd = new FormData();
+        for (const f of files) fd.append("photos", f);
+        if (name.trim()) fd.append("guest_name", name.trim());
+        if (caption.trim()) fd.append("caption", caption.trim());
+        const result = await uploadPhotos(fd);
+        if (result.ok && result.uploaded > 0) {
+          setStep("success");
+        } else {
+          const first = result.errors[0];
+          setToast({
+            title: first?.reason || "Caricamento fallito.",
+            body: "Riprova fra un istante.",
+          });
+          setStep("form");
+        }
+      } catch {
+        // Server action threw (function timeout, network error, etc.) — do not
+        // leave the user stuck on the spinner.
         setToast({
-          title: first?.reason || "Caricamento fallito.",
-          body: "Riprova fra un istante.",
+          title: "Caricamento fallito.",
+          body: "La rete o il server hanno avuto un problema. Riprova.",
         });
         setStep("form");
       }

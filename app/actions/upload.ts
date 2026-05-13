@@ -75,8 +75,8 @@ export async function uploadPhotos(formData: FormData): Promise<UploadResult> {
       const decoded = await maybeConvertHeic(raw, mime, file.name);
       const processed = await sharp(decoded)
         .rotate()
-        .resize(2400, 2400, { fit: "inside", withoutEnlargement: true })
-        .jpeg({ quality: 82, mozjpeg: true })
+        .resize(1800, 1800, { fit: "inside", withoutEnlargement: true })
+        .jpeg({ quality: 78, mozjpeg: true })
         .toBuffer();
       const meta = await sharp(processed).metadata();
 

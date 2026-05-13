@@ -177,9 +177,14 @@ function buildItems(
 
   if (options.allowPlaceholders && normalizedImages.length < totalSlots) {
     const result: Slot[] = coords.map((c) => ({ ...c, ...emptySlot }));
+    // First slot near the front-center of the dome so a single photo is visible
+    // without dragging. coords are laid out column-by-column starting from x=-37
+    // (rotateY ≈ -5° from front), with each column holding 5 y-rows; index 2 hits
+    // the middle row (y=0) of the front column.
+    const FRONT_CENTER_SLOT = 2;
     const step = totalSlots / normalizedImages.length;
     for (let i = 0; i < normalizedImages.length; i++) {
-      const slot = Math.floor(i * step + step / 2) % totalSlots;
+      const slot = (FRONT_CENTER_SLOT + Math.floor(i * step)) % totalSlots;
       const im = normalizedImages[i];
       result[slot] = {
         ...result[slot],

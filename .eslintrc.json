@@ -1,0 +1,4 @@
+{
+  "extends": "next/core-web-vitals",
+  "ignorePatterns": ["_mockup/**", "node_modules/**", ".next/**"]
+}

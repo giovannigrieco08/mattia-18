@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# The official @netlify/plugin-nextjs is auto-installed when Netlify detects Next.js.
+# Server Actions and API routes run on Netlify Functions (sync, 6MB request limit).

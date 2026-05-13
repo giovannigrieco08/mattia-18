@@ -125,14 +125,16 @@ function MainGallery({ photos }: { photos: Photo[] }) {
         >
           Foto migliori.
         </div>
-        <div
-          className="text-[10px] uppercase"
-          style={{ letterSpacing: "0.22em", color: "var(--color-ink-soft)" }}
-        >
-          {photos.length === 0 ? "ancora poche foto" : "scelte di Mattia"}
-        </div>
+        {photos.length === 0 && (
+          <div
+            className="text-[10px] uppercase"
+            style={{ letterSpacing: "0.22em", color: "var(--color-ink-soft)" }}
+          >
+            ancora poche foto
+          </div>
+        )}
       </div>
-      <div className="relative" style={{ height: 440 }}>
+      <div className="relative" style={{ height: 560 }}>
         <DomeGallery
           images={domeImages}
           segments={16}
